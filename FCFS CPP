@@ -1,53 +1,60 @@
-#include<bits/stdc++.h>
-using namespace std;
-int main()
-{
-    int n;
-    cout<<"\nENTER NUMBER OF PROCESS :";
-    cin>>n;
-    int process[n],arrival[n],burst[n],ct[n],tat[n],wt[n],avt,awt;
-    cout<<"\nENTER ARRIVALA TIME :";
-    for(int i=0;i<n;i++)
-    {
-        cin>>arrival[i];
-        process[i]=i+1;
-    }
-    cout<<"\nENTER BURST TIME :";
-    for(int i=0;i<n;i++)
-    {
-        
-        cin>>burst[i];
-    }
-    for(int j=0;j<n;j++)
-    {
-        if(j==0)
-        {
-            ct[j]=arrival[j]+burst[j];
-        }
-        else{
-            if(arrival[j]>ct[j-1])
-            {
-                ct[j]=arrival[j]+burst[j];
-            }
-            else{
-                ct[j]=ct[j-1]+burst[j];
-            }
-        }
-    }
-    for(int i=0;i<n;i++)
-    {
-        tat[i]=ct[i]-arrival[i];
-        avt=avt+tat[i];
+import java.util.Scanner;
 
-        wt[i]=tat[i]-burst[i];
-        awt=awt+wt[i];
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("ENTER NUMBER OF PROCESS: ");
+        int n = scanner.nextInt();
+
+        int[] process = new int[n];
+        int[] arrival = new int[n];
+        int[] burst = new int[n];
+        int[] ct = new int[n];
+        int[] tat = new int[n];
+        int[] wt = new int[n];
+        int avt = 0;
+        int awt = 0;
+
+        System.out.println("ENTER ARRIVAL TIME:");
+        for (int i = 0; i < n; i++) {
+            arrival[i] = scanner.nextInt();
+            process[i] = i + 1;
+        }
+
+        System.out.println("ENTER BURST TIME:");
+        for (int i = 0; i < n; i++) {
+            burst[i] = scanner.nextInt();
+        }
+
+        for (int j = 0; j < n; j++) {
+            if (j == 0) {
+                ct[j] = arrival[j] + burst[j];
+            } else {
+                if (arrival[j] > ct[j - 1]) {
+                    ct[j] = arrival[j] + burst[j];
+                } else {
+                    ct[j] = ct[j - 1] + burst[j];
+                }
+            }
+        }
+
+        for (int i = 0; i < n; i++) {
+            tat[i] = ct[i] - arrival[i];
+            avt += tat[i];
+
+            wt[i] = tat[i] - burst[i];
+            awt += wt[i];
+        }
+
+        System.out.println("process\t\tarrival\t\tburst\t\t ct\t\t tat\t\t wt");
+        for (int i = 0; i < n; i++) {
+            System.out.println(process[i] + "\t\t" + arrival[i] + "\t\t" + burst[i] + "\t\t" + ct[i] + "\t\t" + tat[i] + "\t\t" + wt[i]);
+        }
+
+        System.out.println("\nAVERAGE TAT: " + (avt / n));
+        System.out.println("AVERAGE WT: " + (awt / n));
+
+        scanner.close();
     }
-    cout<<"process\t\tarrival\t\tburst\t\t ct\t\t tat\t\t wt\n";
-    for(int i=0;i<n;i++)
-    {
-        cout<<process[i]<<"\t\t"<<arrival[i]<<"\t\t"<<burst[i]<<"\t\t"<<ct[i]<<"\t\t"<<tat[i]<<"\t\t"<<wt[i]<<"\n";
-    }
-    cout<<"\nAVERAGE TAT :"<<avt/n;
-    cout<<"\nAVERAGE WT  :"<<awt/n;
-    
 }
