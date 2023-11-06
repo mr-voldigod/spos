@@ -1,0 +1,53 @@
+#include<bits/stdc++.h>
+using namespace std;
+int main()
+{
+    int n;
+    cout<<"\nENTER NUMBER OF PROCESS :";
+    cin>>n;
+    int process[n],arrival[n],burst[n],ct[n],tat[n],wt[n],avt,awt;
+    cout<<"\nENTER ARRIVALA TIME :";
+    for(int i=0;i<n;i++)
+    {
+        cin>>arrival[i];
+        process[i]=i+1;
+    }
+    cout<<"\nENTER BURST TIME :";
+    for(int i=0;i<n;i++)
+    {
+        
+        cin>>burst[i];
+    }
+    for(int j=0;j<n;j++)
+    {
+        if(j==0)
+        {
+            ct[j]=arrival[j]+burst[j];
+        }
+        else{
+            if(arrival[j]>ct[j-1])
+            {
+                ct[j]=arrival[j]+burst[j];
+            }
+            else{
+                ct[j]=ct[j-1]+burst[j];
+            }
+        }
+    }
+    for(int i=0;i<n;i++)
+    {
+        tat[i]=ct[i]-arrival[i];
+        avt=avt+tat[i];
+
+        wt[i]=tat[i]-burst[i];
+        awt=awt+wt[i];
+    }
+    cout<<"process\t\tarrival\t\tburst\t\t ct\t\t tat\t\t wt\n";
+    for(int i=0;i<n;i++)
+    {
+        cout<<process[i]<<"\t\t"<<arrival[i]<<"\t\t"<<burst[i]<<"\t\t"<<ct[i]<<"\t\t"<<tat[i]<<"\t\t"<<wt[i]<<"\n";
+    }
+    cout<<"\nAVERAGE TAT :"<<avt/n;
+    cout<<"\nAVERAGE WT  :"<<awt/n;
+    
+}
